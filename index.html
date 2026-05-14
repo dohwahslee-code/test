@@ -1,84 +1,200 @@
+이전에 작성해 드린 **단답형 퀴즈, 핵심 요약 노트, 기출문제 상세 풀이**에 방금 요청하신 **회차별 핵심 용어 해설**까지 모두 통합하여 하나의 완성된 HTML 코드로 정리했습니다. 
+
+이 코드 하나만 복사해서 `index.html` 파일로 저장하신 후 웹 브라우저에서 실행하시면, 실제 앱처럼 메뉴를 이동하며 모든 콘텐츠를 한 화면에서 학습할 수 있는 훌륭한 홈페이지가 완성됩니다.
+
+아래 통합된 전체 코드를 확인해 주세요.
+
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상하수도 기술사 마스터 - 합격 답변서</title>
+    <title>상하수도기술사 완벽 대비 플랫폼</title>
     <style>
-        :root { --primary: #1e3a8a; --secondary: #3b82f6; --bg: #f8fafc; --card: #ffffff; }
-        body { font-family: 'Pretendard', sans-serif; margin: 0; background: var(--bg); color: #1e293b; line-height: 1.7; }
-        header { background: var(--primary); color: white; padding: 4rem 1rem; text-align: center; }
-        nav { background: white; padding: 1rem; position: sticky; top: 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 100; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 8px 16px; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
-        nav a:hover { background: #eff6ff; color: var(--secondary); }
-        .container { max-width: 1100px; margin: 3rem auto; padding: 0 1rem; }
-        .chapter-section { margin-bottom: 5rem; scroll-margin-top: 100px; }
-        h2 { font-size: 1.8rem; color: var(--primary); border-bottom: 3px solid var(--secondary); padding-bottom: 10px; margin-bottom: 2rem; }
-        .qa-card { background: var(--card); border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .question { font-weight: 800; font-size: 1.15rem; color: #0f172a; margin-bottom: 1rem; display: flex; align-items: flex-start; }
-        .question::before { content: "Q."; color: var(--secondary); margin-right: 10px; font-size: 1.5rem; }
-        .answer { background: #f1f5f9; padding: 1.5rem; border-radius: 8px; border-left: 5px solid var(--secondary); }
-        .answer h4 { margin-top: 0; color: var(--primary); }
-        .formula-box { background: #0f172a; color: #10b981; padding: 1rem; border-radius: 6px; font-family: monospace; margin: 1rem 0; overflow-x: auto; }
-        .footer { background: var(--primary); color: white; text-align: center; padding: 3rem; margin-top: 5rem; }
+        body { font-family: 'Malgun Gothic', sans-serif; line-height: 1.6; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
+        header { background: #0056b3; color: white; padding: 1.5rem 0; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 2rem; }
+        header p { margin: 5px 0 0 0; font-size: 1rem; opacity: 0.9; }
+        nav { background: #004494; padding: 10px 0; text-align: center; position: sticky; top: 0; z-index: 100; }
+        nav a { color: white; text-decoration: none; margin: 0 10px; font-weight: bold; font-size: 0.95rem; }
+        nav a:hover { text-decoration: underline; color: #ffeb3b; }
+        .container { max-width: 850px; margin: 20px auto; padding: 0 20px; }
+        .card { background: white; padding: 25px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .card h2 { color: #0056b3; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; margin-top: 0; }
+        
+        /* 퀴즈 섹션 스타일 */
+        .quiz-box { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #fafafa; }
+        .quiz-box h3 { margin-top: 0; font-size: 1.1rem; }
+        .btn { display: inline-block; background: #0056b3; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: background 0.3s; }
+        .btn:hover { background: #004494; }
+        .answer { display: none; padding: 15px; background: #e9ecef; border-left: 4px solid #0056b3; margin-top: 15px; border-radius: 4px; }
+        .badge { background: #ff9800; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem; vertical-align: middle; margin-left: 5px; }
+        
+        /* 회차별 해설 스타일 */
+        .session-box { margin-bottom: 20px; padding: 15px; border-radius: 8px; }
+        .s138 { border: 1px solid #cce5ff; background-color: #f8fbff; }
+        .s138 h3 { color: #004085; border-bottom: 1px dashed #b8daff; padding-bottom: 5px; margin-top: 0;}
+        .s138 h4 { color: #0056b3; margin-bottom: 5px; }
+        
+        .s137 { border: 1px solid #d4edda; background-color: #f1fcf3; }
+        .s137 h3 { color: #155724; border-bottom: 1px dashed #c3e6cb; padding-bottom: 5px; margin-top: 0;}
+        .s137 h4 { color: #28a745; margin-bottom: 5px; }
+        
+        .s136 { border: 1px solid #fff3cd; background-color: #fffdf5; }
+        .s136 h3 { color: #856404; border-bottom: 1px dashed #ffeeba; padding-bottom: 5px; margin-top: 0;}
+        .s136 h4 { color: #d39e00; margin-bottom: 5px; }
+
+        ul { padding-left: 20px; margin-top: 0; }
+        li { margin-bottom: 8px; }
+        footer { background: #333; color: white; text-align: center; padding: 15px 0; font-size: 0.9rem; margin-top: 40px; }
     </style>
+    <script>
+        function toggleAnswer(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
 
-<header>
-    <h1>상하수도 기술사 합격 답변서</h1>
-    <p>출제위원 관점의 핵심 답변 및 단원별 기출 정리</p>
-</header>
+    <header>
+        <h1>💧 상하수도기술사 합격 패스</h1>
+        <p>기출문제 풀이부터 핵심 키워드, 회차별 요약까지 완벽 지원</p>
+    </header>
 
-<nav>
-    <a href="#ch1">수질관리</a>
-    <a href="#ch2">정수처리</a>
-    <a href="#ch4">하수처리</a>
-    <a href="#ch5">고도처리</a>
-    <a href="#ch6">슬러지</a>
-    <a href="#ch8">공식계산</a>
-</nav>
+    <nav>
+        <a href="#quiz">1교시 퀴즈</a>
+        <a href="#summary">핵심 요약 노트</a>
+        <a href="#session">회차별 핵심 해설</a>
+        <a href="#detailed">기출 상세 풀이</a>
+    </nav>
 
-<div class="container">
-    <section id="ch1" class="chapter-section">
-        <h2>제1장 수질관리</h2>
-        <div class="qa-card">
-            <div class="question">알칼리도의 정의와 수처리에서 가지는 중요성을 설명하시오.</div>
-            <div class="answer">
-                <h4>답변 요지:</h4>
-                <p>알칼리도는 산을 중화할 수 있는 능력의 척도입니다. 질산화 과정에서 암모니아 1g당 약 7.14g의 알칼리도가 소모되므로, 고도처리 공정에서는 충분한 알칼리도 확보 여부가 질소 제거 효율을 결정합니다.</p>
-                <div class="formula-box">Alkalinity = [HCO3-] + 2[CO3-2] + [OH-] - [H+]</div>
+    <div class="container">
+        
+        <!-- 1. 단답형 퀴즈 섹션 -->
+        <section id="quiz" class="card">
+            <h2>📝 1교시 단답형 퀴즈 (플래시카드)</h2>
+            <p>자투리 시간을 활용해 빈출 용어와 개념을 테스트해 보세요.</p>
+            
+            <div class="quiz-box">
+                <h3>Q1. 정수처리 공정 중 '파과점 염소주입(Break-point Chlorination)'의 가장 주된 목적은 무엇인가? <span class="badge">제131회 등 빈출</span></h3>
+                <button class="btn" onclick="toggleAnswer('q1')">정답 확인하기</button>
+                <div id="q1" class="answer">
+                    <strong>정답:</strong> 수중의 암모니아성 질소 산화 및 살균<br>
+                    <strong>해설:</strong> 수중의 암모니아성 질소를 파과점까지 산화시켜 결합잔류염소를 분해하고, 소독력이 강한 유리잔류염소를 확보하기 위해 주입합니다.
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="ch4" class="chapter-section">
-        <h2>제4장 하수처리</h2>
-        <div class="qa-card">
-            <div class="question">슬러지 팽창(Bulking)의 원인과 대책을 기술하시오.</div>
-            <div class="answer">
-                <h4>답변 요지:</h4>
-                <p>사상균의 과도한 증식이 주원인이며, 낮은 F/M비, DO 부족, 영양소 불균형 등이 원인입니다. 대책으로는 선택조(Selector) 설치를 통해 사상균 성장을 억제하거나, 일시적으로 염소를 투입하여 사상균을 사멸시키는 방법이 있습니다.</p>
+        <!-- 2. 핵심 요약 노트 섹션 -->
+        <section id="summary" class="card">
+            <h2>🔑 출제 빈도별 핵심 키워드 사전</h2>
+            <h3>[상수도 분야] 고도정수처리 공정 중 오존(O3) 처리 기술</h3>
+            <ul>
+                <li><strong>도입 목적:</strong> 일반 정수처리공정으로 완전히 제거되지 않는 맛·냄새 유발물질, 미량유기오염물질, 암모니아성 질소 등을 제거하기 위하여 생물처리, 오존처리, 활성탄처리 등의 공정을 추가로 설치합니다.</li>
+                <li><strong>주요 특징 및 장점:</strong> 일반 염소소독보다 강력한 산화력을 가지며, 맛냄새 제거 및 바이러스를 불활성화시키는 데 탁월합니다. 또한, 후단에 생물활성탄(BAC) 공정을 결합하면 유기물 제거 효율이 극대화됩니다.</li>
+                <li><strong>문제점 및 유지관리 대책:</strong> 잔류 효과가 없으므로 관망 내 미생물 재성장을 막기 위해 염소 소독을 병행해야 합니다. 배오존 처리설비를 통해 작업자 안전을 확보하는 것이 필수적입니다.</li>
+            </ul>
+        </section>
+
+        <!-- 3. 회차별 핵심 용어 해설 섹션 (새로 추가됨) -->
+        <section id="session" class="card">
+            <h2>📚 회차별 1교시 단답형 모범 정의 해설</h2>
+            <p>최근 시험의 가장 중요한 키워드들의 정의와 핵심 해설을 제공합니다.</p>
+            
+            <!-- 138회 기출문제 -->
+            <div class="session-box s138">
+                <h3>📍 [제138회 기출] 핵심 용어</h3>
+                
+                <div>
+                    <h4>1. 수격작용 (Water Hammer)</h4>
+                    <ul>
+                        <li><strong>모범 정의:</strong> 관로의 수류가 밸브의 급개폐, 펌프의 급정지 등으로 인하여 수류가 감소 또는 가속되면 물의 관성력에 의해 관로 내에서 급격한 유속변화에 대응하여 압력변화가 발생하는 현상입니다.</li>
+                        <li><strong>해설 및 대책:</strong> 관로이음새 및 기기 파손이나 수주분리(Water Column Separation)를 유발할 수 있습니다. 이를 방지하기 위해 펌프에 Fly-wheel을 설치하거나, 조압수조(Surge Tank) 설치, 역류방지 밸브 등을 도입하는 압력상승 경감 대책이 필요합니다.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>2. 용존공기부상법 (DAF)</h4>
+                    <ul>
+                        <li><strong>모범 정의:</strong> 미세 기포를 수중에 발생시켜 조류나 저밀도 플록 등 침강성이 떨어지는 탁질을 수면으로 부상시켜 고액분리하는 정수 공법입니다.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <section id="ch6" class="chapter-section">
-        <h2>제6장 슬러지 처리</h2>
-        <div class="qa-card">
-            <div class="question">슬러지 함수율 감소에 따른 부피 변화의 중요성을 설명하시오.</div>
-            <div class="answer">
-                <h4>답변 요지:</h4>
-                <p>슬러지의 부피는 고형물 함량에 반비례합니다. 함수율을 95%에서 90%로 낮추면 전체 부피는 1/2로 감소하며, 이는 최종 처분 비용의 50% 절감과 직결됩니다.</p>
-                <div class="formula-box">V2 = V1 * (100 - W1) / (100 - W2)</div>
+            <!-- 137회 기출문제 -->
+            <div class="session-box s137">
+                <h3>📍 [제137회 기출] 핵심 용어</h3>
+                
+                <div>
+                    <h4>1. 하수처리시설 반류수 (Side-stream)</h4>
+                    <ul>
+                        <li><strong>모범 정의:</strong> 하수처리장의 혐기성 소화조나 슬러지 처리 공정 등에서 발생하여, 다시 수처리 계통으로 반송되는 고농도의 오염수를 의미합니다.</li>
+                        <li><strong>해설 및 대책:</strong> 반류수는 하수처리장 단위공정에 부하를 주며, 반류수 내 고농도 질소를 제거하기 위해 ANAMMOX 공정 등을 적용하여 부하를 경감시킬 수 있습니다.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>2. THMFP 및 HAAFP</h4>
+                    <ul>
+                        <li><strong>모범 정의:</strong> 수중에서 염소와 반응하여 THMs과 같은 소독부산물질(DBPs)을 생성하는 잠재적 유기물질 농도를 나타냅니다.</li>
+                        <li><strong>해설 및 대책:</strong> 천연유기물질(NOM)이 염소와 반응하며 산화될 때 주로 생성되며, 이를 제어하기 위해 전구물질의 양을 고도산화공정, 활성탄 등으로 관리해야 합니다.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
-</div>
 
-<div class="footer">
-    <p>&copy; 2026 Professional Engineer Water Supply & Sewage. 본 자료는 학습용 가이드입니다.</p>
-</div>
+            <!-- 136회 기출문제 -->
+            <div class="session-box s136">
+                <h3>📍 [제136회 기출] 핵심 용어</h3>
+                
+                <div>
+                    <h4>1. 정속여과방식 (Constant Rate Filtration)</h4>
+                    <ul>
+                        <li><strong>모범 정의:</strong> 여과가 진행되는 동안 여과 속도를 처음부터 끝까지 일정하게 유지하는 방식입니다.</li>
+                        <li><strong>해설 및 대책:</strong> 여과수량의 관리가 용이하나, 장치가 복잡하고 여과지속시간 경과에 따라 손실수두가 크며 부압이 발생하여 여과수질을 악화시킬 우려가 존재합니다.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>2. THMs (Trihalomethanes)</h4>
+                    <ul>
+                        <li><strong>모범 정의:</strong> 염소소독 시 수중의 유·무기물질과 반응하여 천연유기물질(NOM)이 산화되면서 생성되는 대표적인 할로겐화합물 소독부산물입니다.</li>
+                        <li><strong>해설 및 대책:</strong> 발암성이 높고 중추신경계의 작용을 억제하며 인체에 축적되므로, 대체 소독방법을 도입하거나 활성탄 흡착, 막여과 등으로 전구물질을 제어해야 합니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 상세 기출문제 풀이 섹션 -->
+        <section id="detailed" class="card">
+            <h2>📖 회차별 기출문제 상세 풀이 (2~4교시 논술형)</h2>
+            <h3>[제124회 기출 등] 하수고도처리를 위한 연속 회분식 활성슬러지법(SBR) 공정</h3>
+            <p><strong>1. 개요</strong><br>
+            연속 회분식 활성슬러지법(SBR)은 한 개의 단일 반응조에서 혐기, 무산소, 호기과정을 시간적으로 구분하여 질소, 인을 처리하는 시간적 개념의 고도처리공법입니다. 기본적으로 압출류형(Plug Flow)과 회분식(Batch Reactor)의 특징을 결합한 시스템으로 우리나라의 중·소규모 하수처리장에 많이 적용됩니다.</p>
+            
+            <p><strong>2. SBR 공정의 구성 및 운전 순서</strong><br>
+            SBR 공정은 단일 반응기에서 시간적으로 다음과 같이 5단계로 이루어집니다.<br>
+            ① <strong>유입 (Fill):</strong> 하수가 반응조 내로 유입<br>
+            ② <strong>반응 (React):</strong> 포기 및 비포기 상태를 반복하여 호기, 무산소, 혐기 조건을 만들고 유기물 분해, 질산화/탈질 진행<br>
+            ③ <strong>침전 (Settle):</strong> 포기를 중단하여 고액 분리 진행<br>
+            ④ <strong>배출 (Draw/Decant):</strong> 상등수를 외부로 배출<br>
+            ⑤ <strong>휴지 (Idle):</strong> 다음 주기가 시작될 때까지 대기하며, 잉여 슬러지 배출</p>
+
+            <p><strong>3. SBR 공법의 장단점</strong><br>
+            별도의 2차 침전지 및 슬러지 반송설비가 필요 없어 시설 부지면적이 적고 공간 효율이 높다는 것이 가장 큰 장점입니다. 반면, 대규모 하수처리장에는 적용 실적이 상대적으로 적다는 점이 단점으로 꼽힙니다.</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>© 2026 상하수도기술사 합격 패스. 모든 기출문제 및 해설 콘텐츠 제공.</p>
+    </footer>
 
 </body>
 </html>
+```
